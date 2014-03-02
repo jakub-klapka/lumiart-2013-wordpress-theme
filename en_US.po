@@ -1,0 +1,104 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Lumiart theme\n"
+"POT-Creation-Date: 2014-02-27 23:15+0100\n"
+"PO-Revision-Date: 2014-02-27 23:21+0100\n"
+"Last-Translator: \n"
+"Language-Team: Lumiart <lumiart@lumiart.cz>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.3\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;_x\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: C:\\xampp\\htdocs\\lumiart_2013\\wp\\wp-content"
+"\\themes\\lumiart\n"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/404.php:5
+msgid ""
+"Stránka nebyla nalezena, zkuste to přes menu někam jinam. Taky budeme rádi, "
+"když nám o tom dáte vědět."
+msgstr ""
+"Page not found. Use menu to go where you want to go. We would also "
+"apreciate, if you tell us about that."
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/footer.php:14
+msgid "Zpět nahoru"
+msgstr "Back to top"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/header.php:49
+msgid "Otevřít menu"
+msgstr "Open menu"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/header.php:54
+msgid "Sdílet"
+msgstr "Share"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/header.php:64
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/header.php:69
+msgid "Menu"
+msgstr "Menu"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/single-portfolio.php:32
+msgid "Portfolio"
+msgstr "Portfolio"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/single-portfolio.php:66
+msgid "Projekt"
+msgstr "Project"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/template_about_us.php:33
+msgid "Dovednosti:"
+msgstr "Skills:"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/template_about_us.php:36
+msgid "E-mail:"
+msgstr "E-mail:"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/admin-dashboard-activity/admin-dashboard-activity.php:51
+#, php-format
+msgid "Ukázat %s dalších…"
+msgstr "Show %s more..."
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/admin-dashboard-activity/admin-dashboard-activity.php:67
+msgid "Dnes"
+msgstr "Today"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/admin-dashboard-activity/admin-dashboard-activity.php:69
+msgid "Zítra"
+msgstr "Tomorrow"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/admin-dashboard-activity/admin-dashboard-activity.php:72
+msgid "j.n.Y"
+msgstr "j.n.Y"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/admin-dashboard-activity/admin-dashboard-activity.php:77
+#, php-format
+msgid "<span>%1$s, %2$s</span> <a href=\"%3$s\">%4$s</a>"
+msgstr "<span>%1$s, %2$s</span> <a href=\"%3$s\">%4$s</a>"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/admin-dashboard-activity/admin-dashboard-activity.php:112
+msgid "Bude brzo publikováno"
+msgstr "Will be published soon"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/admin-dashboard-activity/admin-dashboard-activity.php:122
+msgid "Nedávno publikováno"
+msgstr "Recently published"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/admin-dashboard-activity/admin-dashboard-activity.php:131
+msgid "Zatím žádná aktivita"
+msgstr "No activity yet"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/classes/Portfolio.global.php:35
+msgid "portfolio"
+msgstr "portfolio"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/classes/Portfolio.global.php:57
+msgid "projekty"
+msgstr "projects"
+
+#: C:\xampp\htdocs\lumiart_2013\wp\wp-content\themes\lumiart/classes/Portfolio.template.php:14
+msgid "Projekty"
+msgstr "Projects"
