@@ -2,7 +2,7 @@
 
 $lumi_classes_path = dirname(__FILE__) . '/classes/';
 
-define( 'LUMI_CSS_VER', 5 );
+define( 'LUMI_CSS_VER', 6 );
 
 
 /**
