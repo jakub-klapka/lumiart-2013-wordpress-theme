@@ -81,75 +81,92 @@ class Layout {
 
 		$meta = wp_get_attachment_metadata( $image_id );
 
-		$upload_dir = wp_upload_dir();
-		preg_match( '/(.+\/).+$/', $meta['file'], $matches ); //get subdir out of meta[file], because in sizes list is filename only
-		$subdir = ( isset($matches[1]) ) ? $matches[1] : '';
-		$upload_url = $upload_dir['url'] . '/' . $subdir;
+		$avail_sizes = array();
 
-		$alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
-
-		//if we have image with exact size, wp dont push it as thumbnail, we have to compensate for that
 		global $lumiart_global_layout;
 		$lumi_responsive_images_sizes = $lumiart_global_layout->responsive_image_sizes;
 
-		foreach( $lumi_responsive_images_sizes[$image_size_handle] as $device =>$sizes ) {
-			if( $meta['width'] == $sizes[0] && $meta['height'] == $sizes[1] ) { //we got image which has exact sizes for output
-				$striped_filename = str_replace( $subdir, '', $meta['file'] );
-				$meta['sizes'][$image_size_handle . '_' . $device]['file'] = $striped_filename; //trick our next script, that we have this thumb...
-			}
-			if( $meta['width'] == ( $sizes[0] * 2 ) && $meta['height'] == ( $sizes[1] * 2 ) ) {
-				$meta['sizes'][$image_size_handle . '_' . $device . '_retina']['file'] = $meta['file'];
-			}
+		//get size handlers for current image
+		$f = array_filter( array_keys( $lumi_responsive_images_sizes ), function( $item ) use ( $image_size_handle ){
+			return ( strpos( $item, $image_size_handle ) === 0 ) ? true : false;
+		} );
+		$current_sizes = array_intersect_key( $lumi_responsive_images_sizes, array_flip( $f ));
 
+		$current_sizes = $current_sizes[$image_size_handle];
+
+		//add retina sizes
+		foreach( $current_sizes as $key => $size_arr ) {
+			$current_sizes[ $key . '_x2' ] = array( $size_arr[0] * 2, $size_arr[1] * 2 );
 		}
 
-		$mobile_mq = '(max-width: 767px)';
-		$mobile_half_mq = '(max-width: 480px)';
-		$tablet_mq = '(min-width: 768px) and (max-width: 1024px)';
-		$desktop_mq = '(min-width: 1025px)';
-		$retina_mq = ' and (-webkit-min-device-pixel-ratio: 2),(min-resolution: 192dpi)';
+		//add correct prefix
+		$current_handlers = array();
 
-		?>
-		<span data-picture data-alt="<?php echo $alt; ?>">
-			<span data-src="<?php echo $upload_url . $meta['sizes'][$image_size_handle . '_desktop']['file']; ?>"></span>
-			<?php if( isset( $meta['sizes'][$image_size_handle . '_mobile']['file'] ) ):
-				$current_file = $meta['sizes'][$image_size_handle . '_mobile']['file']; ?>
-				<span data-src="<?php echo $upload_url . $current_file; ?>" data-media="<?php echo $mobile_mq; ?>"></span>
-			<?php endif; ?>
-			<?php if( isset( $meta['sizes'][$image_size_handle . '_mobile_retina']['file'] ) ):
-				$current_file = $meta['sizes'][$image_size_handle . '_mobile_retina']['file']; ?>
-				<span data-src="<?php echo $upload_url . $current_file; ?>" data-media="<?php echo $mobile_mq . $retina_mq; ?>"></span>
-			<?php endif; ?>
+		foreach( $current_sizes as $size_handle => $size_arr ) {
+			$current_handlers[ $image_size_handle . '_' . $size_handle ] = $size_arr;
+		}
 
-			<?php if( isset( $meta['sizes'][$image_size_handle . '_mobile_half']['file'] ) ):
-				$current_file = $meta['sizes'][$image_size_handle . '_mobile_half']['file']; ?>
-				<span data-src="<?php echo $upload_url . $current_file; ?>" data-media="<?php echo $mobile_half_mq; ?>"></span>
-			<?php endif; ?>
-			<?php if( isset( $meta['sizes'][$image_size_handle . '_mobile_half_retina']['file'] ) ):
-				$current_file = $meta['sizes'][$image_size_handle . '_mobile_half_retina']['file']; ?>
-				<span data-src="<?php echo $upload_url . $current_file; ?>" data-media="<?php echo $mobile_half_mq . $retina_mq; ?>"></span>
-			<?php endif; ?>
+		//Get image sizes
+		$image_sizes = array();
 
-			<?php if( isset( $meta['sizes'][$image_size_handle . '_tablet']['file'] ) ):
-				$current_file = $meta['sizes'][$image_size_handle . '_tablet']['file']; ?>
-				<span data-src="<?php echo $upload_url . $current_file; ?>" data-media="<?php echo $tablet_mq; ?>"></span>
-			<?php endif; ?>
-			<?php if( isset( $meta['sizes'][$image_size_handle . '_tablet_retina']['file'] ) ):
-				$current_file = $meta['sizes'][$image_size_handle . '_tablet_retina']['file']; ?>
-				<span data-src="<?php echo $upload_url . $current_file; ?>" data-media="<?php echo $tablet_mq . $retina_mq; ?>"></span>
-			<?php endif; ?>
-			<?php if( isset( $meta['sizes'][$image_size_handle . '_desktop']['file'] ) ):
-				$current_file = $meta['sizes'][$image_size_handle . '_desktop']['file']; ?>
-				<span data-src="<?php echo $upload_url . $current_file; ?>" data-media="<?php echo $desktop_mq; ?>"></span>
-			<?php endif; ?>
-			<?php if( isset( $meta['sizes'][$image_size_handle . '_desktop_retina']['file'] ) ):
-				$current_file = $meta['sizes'][$image_size_handle . '_desktop_retina']['file']; ?>
-				<span data-src="<?php echo $upload_url . $current_file; ?>" data-media="<?php echo $desktop_mq . $retina_mq; ?>"></span>
-			<?php endif; ?>
-			<noscript><?php	if( !empty( $img_aditional_markup ) ) { $img_aditional_markup = ' ' . $img_aditional_markup; } ?>
-				<img src="<?php echo $upload_url . $meta['sizes'][$image_size_handle . '_desktop']['file']; ?>" alt="<?php echo $alt; ?>" <?php echo $img_aditional_markup; ?>>
-			</noscript>
-		</span><?php
+		foreach( $current_handlers as $handler => $size_arr ) {
+			$current_thumb = wp_get_attachment_image_src( $image_id, $handler );
+			if( $current_thumb[3] === true ) { //only those which get resized
+				$image_sizes[$handler] = array(
+					'url' => $current_thumb[0],
+					'width' => $current_thumb[1],
+					'height' => $current_thumb[2]
+				);
+			}
+		}
+
+		//if original image has right ratio, add it to the list
+		$original = wp_get_attachment_image_src( $image_id, 'full' );
+		if( $original[1] / $original[2] === reset($current_handlers)[0] / reset($current_handlers)[1] ) {
+			$image_sizes['original'] = array(
+				'url' => $original[0],
+				'width' => $original[1],
+				'height' => $original[2]
+			);
+		}
+
+		$srcset = ''; $first = true;
+		foreach( $image_sizes as $handle => $size_arr ) {
+			if( $first !== true ) {
+				$srcset .= ', ';
+			}
+			$srcset .= $size_arr['url'] . ' ' . $size_arr['width'] . 'w';
+			$first = false;
+		}
+
+		//SIZES
+		switch( $image_size_handle ) {
+			case 'home_heading':
+				$sizes = '(max-width: 767px) 100vw, (max-width: 1024px) 50vw, (max-width: 1500px) 30vw, 450px';
+				break;
+			case 'home_testimonials':
+				$sizes = '(max-width: 767px) 100vw, (max-width: 1024px) 50vw, (max-width: 1500px) 35vw, 470px';
+				break;
+			case 'team_image':
+				$sizes = '(max-width: 767px) 100vw, (max-width: 1500px) 50vw, 700px';
+				break;
+			case 'portfolio_image':
+				$sizes = '(max-width: 767px) 100vw, (max-width: 1024px) 60vw, (max-width: 1500px) 30vw, 450px';
+				break;
+			case 'portfolio_logo':
+				$sizes = '(max-width: 767px) 100vw, (max-width: 1500px) 30vw, 460px';
+				break;
+			case 'projects_image':
+				$sizes = '(max-width: 767px) 100vw, (max-width: 1024px) 60vw, (max-width: 1500px) 30vw, 450px';
+				break;
+			default:
+				$sizes = '100vw';
+		}
+
+
+		printf( '<img srcset="%s" sizes="%s" alt="%s"/>',
+			$srcset, $sizes, $meta['alt'] );
+
 
 	}
 
