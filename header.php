@@ -11,10 +11,17 @@
 		window.root_url = '<?php bloginfo('template_url'); ?>/';
 	</script>
 
-	<?php wp_head(); ?>
+	<script type="text/javascript">
+		function loadCSS(e,t,n){"use strict";var i=window.document.createElement("link");var o=t||window.document.getElementsByTagName("script")[0];i.rel="stylesheet";i.href=e;i.media="only x";o.parentNode.insertBefore(i,o);setTimeout(function(){i.media=n||"all"})}
+	</script>
 
-	<!-- deffered scripts -->
-	<?php $l->lumi_deffered_scripts(); ?>
+	<!-- Cricital CSS -->
+
+	<?php $l->critical_css(); ?>
+
+	<!-- /Cricital CSS -->
+
+	<?php wp_head(); ?>
 
 	<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/images/favicon/favicon.ico">
 	<link rel="apple-touch-icon" sizes="57x57" href="<?php echo get_template_directory_uri(); ?>/images/favicon/apple-touch-icon-57x57.png">

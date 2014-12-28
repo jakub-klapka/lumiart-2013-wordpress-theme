@@ -1,4 +1,4 @@
-<?php $o = lumi_load_template( 'Options' ); ?>
+<?php $o = lumi_load_template( 'Options' ); $l = lumi_load_template( 'Layout' ); ?>
 	<footer class="main_footer lumi_box" role="contentinfo">
 		<div class="copyright">&copy;<?php echo date_format( date_create(), 'Y' ); ?> Lumiart.cz</div>
 		<div class="buttons">
@@ -25,5 +25,7 @@
 </div>
 
 <?php wp_footer(); ?>
+<!-- deffered scripts -->
+<?php $l->lumi_deffered_scripts(); ?>
 </body>
 </html>

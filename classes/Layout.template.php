@@ -165,7 +165,7 @@ class Layout {
 
 
 		printf( '<img srcset="%s" sizes="%s" alt="%s"/>',
-			$srcset, $sizes, $meta['alt'] );
+			$srcset, $sizes, ( isset( $meta['alt'] ) ? $meta['alt'] : '' ) );
 
 
 	}
@@ -201,6 +201,38 @@ class Layout {
 		<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-526188d2385057bf"></script>
 		<!-- AddThis Button END -->
 	<?php
+	}
+
+	public function critical_css() {
+
+		$handle = false;
+
+		if( basename( get_page_template() ) === 'template_home.php' ) {
+			$handle = 'home';
+		}
+		if( basename( get_page_template() ) === 'template_contact.php' ) {
+			$handle = 'contact';
+		}
+		if( basename( get_page_template() ) === 'template_portfolio.php' || is_singular( 'portfolio' ) || is_singular( 'projects' ) ) {
+			$handle = 'portfolio';
+		}
+		if( basename( get_page_template() ) === 'template_about_us.php' ) {
+			$handle = 'team';
+		}
+
+		if( !$handle ) {
+			$handle = 'layout';
+		}
+
+		$source = file_get_contents( get_template_directory_uri() . '/css/critical-' . $handle . '.css' );
+		$source = str_replace( '\\', '/', $source );
+		$source = str_replace( 'content:\'/', 'content:\'\\', $source );
+		$source = str_replace( 'content:"/', 'content:"\\', $source );
+		$source = str_replace( '/build/', get_template_directory_uri() . '/', $source );
+
+		echo '<style type="text/css">' . $source . '</style>';
+
+
 	}
 
 }

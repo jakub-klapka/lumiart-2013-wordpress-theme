@@ -22,8 +22,19 @@ class Layout {
 		global $sitepress;
 		remove_action( 'wp_head', array($sitepress, 'meta_generator_tag' ) );
 
+		add_filter( 'style_loader_tag', array( $this, 'load_css' ), 10, 2 );
 
+	}
 
+	public function load_css( $tag, $handle ) {
+		if( in_array($GLOBALS['pagenow'], array('wp-login.php', 'wp-register.php' )) || strpos( $_SERVER['REQUEST_URI'], 'administrace' ) !== false ) {
+			return $tag;
+		}
+		global $wp_styles;
+		$current_handle = $wp_styles->registered[$handle];
+		$href = $wp_styles->_css_href( $current_handle->src, $current_handle->ver, $handle );
+		$output = '<script type="text/javascript">loadCSS("' . $href . '");</script>';
+		return $output;
 	}
 
 	public function register_styles()
@@ -32,42 +43,42 @@ class Layout {
 		wp_register_style( 'layout', get_bloginfo('template_url') . '/css/layout.css', array(), LUMI_CSS_VER );
 
 		wp_deregister_script( 'jquery' );
-		wp_register_script( 'modernizr', get_bloginfo('template_url') . '/js/modernizr.js' );
-		wp_register_script( 'picturefill', get_bloginfo('template_url') . '/js/picturefill.min.js', array(), LUMI_CSS_VER );
-		wp_register_script( 'jquery', get_bloginfo('template_url') . '/js/jquery-1.10.2.min.js', array(), LUMI_CSS_VER );
-		wp_register_script( 'jquery_mobile', get_bloginfo('template_url') . '/js/jquery.mobile.custom.min.js', array( 'jquery' ), LUMI_CSS_VER );
+		wp_register_script( 'modernizr', get_bloginfo('template_url') . '/js/modernizr.js', array(), LUMI_CSS_VER, true );
+		wp_register_script( 'picturefill', get_bloginfo('template_url') . '/js/picturefill.min.js', array(), LUMI_CSS_VER, true );
+		wp_register_script( 'jquery', get_bloginfo('template_url') . '/js/jquery-1.10.2.min.js', array(), LUMI_CSS_VER, true );
+		wp_register_script( 'jquery_mobile', get_bloginfo('template_url') . '/js/jquery.mobile.custom.min.js', array( 'jquery' ), LUMI_CSS_VER, true );
 		//wp_register_script( 'addthis', '//s7.addthis.com/js/300/addthis_widget.js' ); //will be deffered
-		wp_register_script( 'layout', get_bloginfo('template_url') . '/js/layout.min.js', array( 'modernizr', 'picturefill' , 'jquery', 'jquery_mobile' ), LUMI_CSS_VER );
+		wp_register_script( 'layout', get_bloginfo('template_url') . '/js/layout.min.js', array( 'modernizr', 'picturefill' , 'jquery', 'jquery_mobile' ), LUMI_CSS_VER, true );
 
 		//enqueue globals
 		wp_enqueue_style( 'layout' );
 		wp_enqueue_script( 'layout' );
 
 		//handlebars
-		wp_register_script( 'handlebars_runtime', get_bloginfo('template_url') . '/js/handlebars.runtime.min.js', array(), LUMI_CSS_VER );
+		wp_register_script( 'handlebars_runtime', get_bloginfo('template_url') . '/js/handlebars.runtime.min.js', array(), LUMI_CSS_VER, true );
 
 		//home
 		wp_register_style( 'home', get_bloginfo( 'template_url' ) . '/css/home.css', array( 'layout' ), LUMI_CSS_VER );
-		wp_register_script( 'home', get_bloginfo( 'template_url' ) . '/js/home.min.js', array( 'layout' ), LUMI_CSS_VER );
+		wp_register_script( 'home', get_bloginfo( 'template_url' ) . '/js/home.min.js', array( 'layout' ), LUMI_CSS_VER, true );
 
 		//team
-		wp_register_script( 'email_decode', get_template_directory_uri() . '/js/email_decode.min.js', array( 'layout' ), LUMI_CSS_VER );
+		wp_register_script( 'email_decode', get_template_directory_uri() . '/js/email_decode.min.js', array( 'layout' ), LUMI_CSS_VER, true );
 		wp_register_style( 'about_us', get_bloginfo('template_url') . '/css/team.css', array('layout'), LUMI_CSS_VER );
-		wp_register_script( 'about_us', get_bloginfo( 'template_url' ) . '/js/team.min.js', array( 'layout', 'email_decode' ), LUMI_CSS_VER );
+		wp_register_script( 'about_us', get_bloginfo( 'template_url' ) . '/js/team.min.js', array( 'layout', 'email_decode' ), LUMI_CSS_VER, true );
 
 		//portfolio
 		wp_register_style( 'portfolio', get_bloginfo('template_url') . '/css/portfolio.css', array( 'layout' ), LUMI_CSS_VER );
-		wp_register_script( 'portfolio_hb_template', get_bloginfo('template_url') . '/js/portfolio_hb_template.min.js', array( 'handlebars_runtime' ), LUMI_CSS_VER );
-		wp_register_script( 'portfolio', get_bloginfo('template_url') . '/js/portfolio.min.js', array( 'layout', 'portfolio_hb_template' ), LUMI_CSS_VER );
+		wp_register_script( 'portfolio_hb_template', get_bloginfo('template_url') . '/js/portfolio_hb_template.min.js', array( 'handlebars_runtime' ), LUMI_CSS_VER, true );
+		wp_register_script( 'portfolio', get_bloginfo('template_url') . '/js/portfolio.min.js', array( 'layout', 'portfolio_hb_template' ), LUMI_CSS_VER, true );
 
 		//projects
-		wp_register_script( 'projects_hb_template', get_bloginfo('template_url') . '/js/projects_hb_template.min.js', array( 'handlebars_runtime' ), LUMI_CSS_VER );
-		wp_register_script( 'projects', get_bloginfo('template_url') . '/js/portfolio.min.js', array( 'layout', 'projects_hb_template' ), LUMI_CSS_VER );
+		wp_register_script( 'projects_hb_template', get_bloginfo('template_url') . '/js/projects_hb_template.min.js', array( 'handlebars_runtime' ), LUMI_CSS_VER, true );
+		wp_register_script( 'projects', get_bloginfo('template_url') . '/js/portfolio.min.js', array( 'layout', 'projects_hb_template' ), LUMI_CSS_VER, true );
 
 		//kontakt
 		wp_register_style( 'kontakt', get_bloginfo( 'template_url' ) . '/css/contact.css', array( 'layout' ), LUMI_CSS_VER );
-		wp_register_script( 'autosize', get_bloginfo( 'template_url' ) . '/js/jquery.autosize.min.js', array( 'jquery' ), LUMI_CSS_VER );
-		wp_register_script( 'kontakt', get_bloginfo( 'template_url' ) . '/js/contact.min.js', array( 'layout', 'jquery', 'autosize' ), LUMI_CSS_VER );
+		wp_register_script( 'autosize', get_bloginfo( 'template_url' ) . '/js/jquery.autosize.min.js', array( 'jquery' ), LUMI_CSS_VER, true );
+		wp_register_script( 'kontakt', get_bloginfo( 'template_url' ) . '/js/contact.min.js', array( 'layout', 'jquery', 'autosize' ), LUMI_CSS_VER, true );
 	}
 
 }
