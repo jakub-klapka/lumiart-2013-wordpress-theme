@@ -38,9 +38,10 @@ $projects_url = $o->get_field( 'projects_link', 'general_frontend' );
 $post_slug = $GLOBALS['post']->post_name;
 $url = $projects_url . '#' . $post_slug;
 
-ob_start();
-$l->addthis_toolbox( $url, $p->get_portfolio_title( true ) );
-$share_content = ob_get_clean();
+//ob_start();
+//$l->addthis_toolbox( $url, $p->get_portfolio_title( true ) );
+//$share_content = ob_get_clean();
+$share_content = '';
 
 $output['share_content'] = $share_content;
 

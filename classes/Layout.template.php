@@ -7,7 +7,7 @@ class Layout {
 
 	public function lumi_deffered_scripts() {
 
-		$scripts = apply_filters( 'lumi_deffered_scripts', array( '//s7.addthis.com/js/300/addthis_widget.js' ) );
+		//$scripts = apply_filters( 'lumi_deffered_scripts', array( '//s7.addthis.com/js/300/addthis_widget.js' ) );
 
 		if( !empty( $scripts ) ): ?>
 			<script type="text/javascript">
@@ -224,7 +224,7 @@ class Layout {
 			$handle = 'layout';
 		}
 
-		$source = file_get_contents( get_template_directory_uri() . '/css/critical-' . $handle . '.css' );
+		$source = file_get_contents( ABSPATH . '/wp-content/themes/lumiart/css/critical-' . $handle . '.css' ); //TODO: relative path
 		$source = str_replace( '\\', '/', $source );
 		$source = str_replace( 'content:\'/', 'content:\'\\', $source );
 		$source = str_replace( 'content:"/', 'content:"\\', $source );

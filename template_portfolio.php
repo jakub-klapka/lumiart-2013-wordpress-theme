@@ -66,7 +66,7 @@ $portfolio_posts = new WP_Query(array(
 					<div class="center_inside client_link"><a class="button" href="<?php echo $link; ?>" target="_blank" itemprop="url"><?php echo $pre_link . $p->single_portfolio_strip_link($link); ?><div class="left_glow"></div><div class="right_glow"></div></a></div>
 				<?php endif; ?>
 
-				<div class="client_share_buttons"><?php $l->addthis_toolbox( $portfolio_permalink . '#' . $GLOBALS['post']->post_name, $p->get_portfolio_title() ); ?></div>
+				<?php /*<div class="client_share_buttons"><?php $l->addthis_toolbox( $portfolio_permalink . '#' . $GLOBALS['post']->post_name, $p->get_portfolio_title() ); ?></div>*/?>
 
 
 			</div>
@@ -106,7 +106,7 @@ $portfolio_posts = new WP_Query(array(
 					<div class="center_inside client_link"><a class="button" href="<?php echo $link; ?>" target="_blank" itemprop="url"><?php echo $pre_link . $p->single_portfolio_strip_link($link); ?><div class="left_glow"></div><div class="right_glow"></div></a></div>
 				<?php endif; ?>
 
-				<div class="client_share_buttons"><?php $l->addthis_toolbox( $portfolio_permalink . '#' . $GLOBALS['post']->post_name, $p->get_portfolio_title(true) ); ?></div>
+				<?php /*<div class="client_share_buttons"><?php $l->addthis_toolbox( $portfolio_permalink . '#' . $GLOBALS['post']->post_name, $p->get_portfolio_title(true) ); ?></div>*/?>
 
 			</div>
 

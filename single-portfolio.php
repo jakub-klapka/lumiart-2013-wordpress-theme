@@ -56,7 +56,7 @@ add_action( 'wp_enqueue_scripts', 'lumi_load_portfolio_style' );
 				<div class="center_inside"><a class="button client_link" href="<?php echo $link; ?>" target="_blank"><?php echo $pre_link . $p->single_portfolio_strip_link($link); ?><div class="left_glow"></div><div class="right_glow"></div></a></div>
 			<?php endif; ?>
 
-			<div class="client_share_buttons"><?php $l->addthis_toolbox( get_permalink() ); ?></div>
+			<?php /*<div class="client_share_buttons"><?php $l->addthis_toolbox( get_permalink() ); ?></div>*/?>
 
 			<!-- nonsemantic stuff -->
 			<div class="left_corners" aria-hidden="true"></div><div class="right_corners" aria-hidden="true"></div><div class="top_tag" aria-hidden="true"><?php $o->the_field( 'portfolio_detail_tag', 'general_frontend' ); ?></div><div class="bottom_tag" aria-hidden="true"><?php $o->the_field( 'portfolio_detail_tag', 'general_frontend' ); ?></div>
@@ -84,7 +84,7 @@ add_action( 'wp_enqueue_scripts', 'lumi_load_portfolio_style' );
 				<div class="center_inside"><a class="button client_link" href="<?php echo $link; ?>" target="_blank"><?php echo $pre_link . $p->single_portfolio_strip_link($link); ?><div class="left_glow"></div><div class="right_glow"></div></a></div>
 			<?php endif; ?>
 
-			<div class="client_share_buttons"><?php $l->addthis_toolbox( get_permalink() ); ?></div>
+			<?php /*<div class="client_share_buttons"><?php $l->addthis_toolbox( get_permalink() ); ?></div>*/?>
 
 			<!-- nonsemantic stuff -->
 			<div class="left_corners" aria-hidden="true"></div><div class="right_corners" aria-hidden="true"></div><div class="top_tag" aria-hidden="true"><?php $o->the_field( 'projects_detail_tag', 'general_frontend' ); ?></div><div class="bottom_tag" aria-hidden="true"><?php $o->the_field( 'projects_detail_tag', 'general_frontend' ); ?></div>

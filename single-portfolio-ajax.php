@@ -35,9 +35,10 @@ $portfolio_url = $o->get_field( 'portfolio_link', 'general_frontend' );
 $post_slug = $GLOBALS['post']->post_name;
 $url = $portfolio_url . '#' . $post_slug;
 
-ob_start();
-$l->addthis_toolbox( $url, $p->get_portfolio_title() );
-$share_content = ob_get_clean();
+//ob_start();
+//$l->addthis_toolbox( $url, $p->get_portfolio_title() );
+//$share_content = ob_get_clean();
+$share_content = '';
 
 $output['share_content'] = $share_content;
 
